@@ -13,9 +13,9 @@ import csv
 import pandas as pd
 
 
-def _detailed_query(query, apikey, loc_type, disease=None, city=None, state=None,  start=None, end=None, event='cases'):
-    """
-    """
+def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=None, state=None,  start=None, end=None):
+
+
     url = 'http://www.tycho.pitt.edu/api/{}?'.format(query)
     parameters = {'event':event, 'disease':disease, 'loc_type':loc_type, 'loc':city, 'state':state, 'start':start, 'end':end}
     for key, value in parameters.iteritems():
@@ -30,18 +30,18 @@ def _detailed_query(query, apikey, loc_type, disease=None, city=None, state=None
     try:
         reader =  csv.reader(api_response.split('\n'), delimiter=',')
         headers = reader.next()
-        data = pd.DataFrame([row for row in reader], columns=headers)
+        dat = pd.DataFrame([row for row in reader], columns=headers)
 
-        return data
+        return dat
     except:
         print('API error: {}'.format(url.text))
 
 
 
- def _get_options(query, apikey):
+def _get_options(query, apikey):
     """
     """
-    url = requests.get('http://www.tycho.pitt.edu/api/{}?apikey={}.csv'.format(query, apikey))
+    url = requests.get('http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey))
     api_response = url.text.lower()
     reader = csv.reader(api_response.strip().split('\n'), delimiter=',')
     results = [dz[0] for dz in reader]
@@ -71,8 +71,8 @@ def get_data(apikey, loc_type, disease, event='cases', city=None, state=None,  s
     RETURNS
     pandas dataframe of results
     """
-    query = 'data'
-    data = _detailed_query(query, apikey, loc_type, disease, event='cases', city=None, state=None,  start=None, end=None)
+    query = 'query'
+    data = _detailed_query(query, apikey, loc_type, disease, event, city, state,  start, end)
 
     return data
 
@@ -94,6 +94,16 @@ def get_states(apikey):
     Returns list of states and territories available for Tycho MMWR data
     """
     query = 'states'
+    results = _get_options(query, apikey)
+
+    return results
+
+
+def get_disease(apikey):
+    """
+    Returns list of diseases available for Tycho MMWR data
+    """
+    query = 'diseases'
     results = _get_options(query, apikey)
 
     return results
