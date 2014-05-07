@@ -7,7 +7,7 @@ According to their [website](http://www.tycho.pitt.edu/), "the Project Tycho™ 
 
 ### Before using pycho
 
-You must register for an account at [Project Tycho](http://www.tycho.pitt.edu/), then request an api key [here](http://www.tycho.pitt.edu/apikey.php)
+You must register for an account at [Project Tycho](http://www.tycho.pitt.edu/), then request an api key [here.](http://www.tycho.pitt.edu/apikey.php)
 
 
 ### Installation
@@ -24,6 +24,8 @@ To install pycho:
 
 The core function returns all data matching specific parameters. Required parameters are the api key,
 loc_type (values are city or state), event (values are deaths or cases), and either a disease or a location (either city parameter or state parameter).
+
+
     In[0]: pycho.get_data(apikey, loc_type='state', event='cases', disease='measles', state='fl')
     Out[0]:
         year week      loc state country loc_type number  event
@@ -32,8 +34,8 @@ loc_type (values are city or state), event (values are deaths or cases), and eit
     2   1927   49  FLORIDA    FL      US    STATE      3  CASES
     3   1927   51  FLORIDA    FL      US    STATE      5  CASES
 
-
 Find which diseases are available by location and time period:
+
     In[1]: california_data = pycho.get_info(apikey, 'state', 'cases', state='ca')
     Out[1]:
                                    disease       start         end records
@@ -44,6 +46,7 @@ Find which diseases are available by location and time period:
     4                            CHLAMYDIA  2006-01-01  2013-08-10     371
 
 List all available states:
+
     In [2]: pycho.get_states(apikey)
     Out[2]:
     ['alaska',
@@ -54,6 +57,7 @@ List all available states:
      'california']
 
 List all available cities:
+
     In [3]: pycho.get_cities(apikey)
     Out[3]:
     ['ketchikan',
@@ -63,6 +67,7 @@ List all available cities:
      'bessemer''
 
 List all available diseases:
+
     In [4]: pycho.get_disease(apikey)
     Out[4]:
     ['anthrax',
