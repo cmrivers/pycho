@@ -10,7 +10,7 @@ According to their [website](http://www.tycho.pitt.edu/), "the Project Tycho™ 
 You must register for an account at [Project Tycho](http://www.tycho.pitt.edu/), then request an api key [here.](http://www.tycho.pitt.edu/apikey.php)
 
 
-### Installation
+### Installation and requirements
 
 To install pycho:
 
@@ -18,12 +18,16 @@ To install pycho:
     cd ./pycho
     python setup.py install
 
+[Pandas](http://pandas.pydata.org/) is the only requirement.
+
 ### Basic usage
+
+First things first:
 
     apikey = 'YOUR API KEY'
 
 The core function returns all data matching specific parameters. Required parameters are the api key,
-loc_type (values are city or state), event (values are deaths or cases), and either a disease or a location (either city parameter or state parameter).
+loc_type (values are city or state), event (values are deaths or cases), and either a disease or a location (either city parameter or state parameter). Optional arguments are state and end years. The function returns a pandas dataframe of the results
 
 
     In[0]: pycho.get_data(apikey, loc_type='state', event='cases', disease='measles', state='fl')
