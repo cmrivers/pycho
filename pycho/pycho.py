@@ -41,10 +41,10 @@ def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=N
 def _get_options(query, apikey):
     """
     """
-    url = requests.get('http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey))
-    api_response = url.text.lower()
-    reader = csv.reader(api_response.strip().split('\n'), delimiter=',')
-    results = [dz[0] for dz in reader]
+    url = 'http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey)
+    root = ET.parse(urllib.urlopen(url)).getroot()
+    for row in root.findall('row'):
+
 
     return results[1:]
 
@@ -83,9 +83,22 @@ def get_cities(apikey):
     Returns list of available cities for Tycho MMWR data.
     """
     query = 'cities'
-    results = _get_options(query, apikey)
+    url = 'http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey)
+    root = ET.parse(urllib.urlopen(url)).getroot()
 
-    return results
+    dat = {}
+    row = 0
+    for item in root.findall('row'):
+        loc = item.find('loc').text
+        states = item.find('state').text
+        entry = {'state':states, 'citiy':loc}
+        row += 1
+
+        dat[row] = entry
+
+    df = pd.DataFrame(dat).T.head()
+
+    return df
 
 
 
@@ -94,9 +107,22 @@ def get_states(apikey):
     Returns list of states and territories available for Tycho MMWR data
     """
     query = 'states'
-    results = _get_options(query, apikey)
+    url = 'http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey)
+    root = ET.parse(urllib.urlopen(url)).getroot()
 
-    return results
+    entries = {}
+    row = 0
+    for item in root.findall('row'):
+        loc = item.find('loc').text
+        states = item.find('state').text
+        entry = {'abrv':states, 'state':loc}
+        row += 1
+
+        entry[row] = entry
+
+    df = pd.DataFrame(entries).T
+
+    return df
 
 
 def get_disease(apikey):
