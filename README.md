@@ -53,22 +53,21 @@ List all available states:
 
     In [2]: pycho.get_states(apikey)
     Out[2]:
-    ['alaska',
-     'alabama',
-     'arkansas',
-     'american samoa',
-     'arizona',
-     'california']
+       abrv                     state
+    1    AK                    ALASKA
+    2    AL                   ALABAMA
+    3    AR                  ARKANSAS
 
 List all available cities:
 
     In [3]: pycho.get_cities(apikey)
     Out[3]:
-    ['ketchikan',
-     'alameda',
-     'anniston',
-     'berkley',
-     'bessemer''
+           citiy state
+    1  KETCHIKAN    AK
+    2    ALAMEDA    AL
+    3   ANNISTON    AL
+    4    BERKLEY    AL
+    5   BESSEMER    AL
 
 List all available diseases:
 
