@@ -120,7 +120,10 @@ def get_disease(apikey):
     Returns list of diseases available for Tycho MMWR data
     """
     query = 'diseases'
-    results = _get_options(query, apikey)
+    url = requests.get('http://www.tycho.pitt.edu/api/{}?apikey={}.csv'.format(query, apikey))
+    api_response = url.text.lower()
+    reader = csv.reader(api_response.strip().split('\n'), delimiter=',')
+    results = [dz[0] for dz in reader]
 
     return results
 
