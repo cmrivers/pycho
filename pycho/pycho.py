@@ -40,18 +40,6 @@ def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=N
 
 
 
-def _get_options(query, apikey):
-    """
-    """
-    url = 'http://www.tycho.pitt.edu/api/{}?apikey={}.xml'.format(query, apikey)
-    root = ET.parse(urllib.urlopen(url)).getroot()
-    for row in root.findall('row'):
-
-
-    return results[1:]
-
-
-
 def get_data(apikey, loc_type, disease, event='cases', city=None, state=None,  start=None, end=None):
     """
     Fetches data from Tycho API.
@@ -98,7 +86,7 @@ def get_cities(apikey):
 
         dat[row] = entry
 
-    df = pd.DataFrame(dat).T.head()
+    df = pd.DataFrame(dat).T
 
     return df
 
@@ -120,7 +108,7 @@ def get_states(apikey):
         entry = {'abrv':states, 'state':loc}
         row += 1
 
-        entry[row] = entry
+        entries[row] = entry
 
     df = pd.DataFrame(entries).T
 
