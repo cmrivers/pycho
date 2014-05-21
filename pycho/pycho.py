@@ -11,6 +11,8 @@
 import requests
 import csv
 import pandas as pd
+import urllib
+import xml.etree.ElementTree as ET
 
 
 def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=None, state=None,  start=None, end=None):
