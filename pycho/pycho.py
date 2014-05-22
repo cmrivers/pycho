@@ -34,9 +34,8 @@ def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=N
         headers = reader.next()
         dat = pd.DataFrame([row for row in reader], columns=headers)
         dat['number'] = dat['number'].astype(float)
-        dat['year'] = dat['year'].astype(int)
-        dat['week'] = dat['week'].astype(int)
-
+        dat['year'] = dat['year'].astype(float)
+        dat['week'] = dat['week'].astype(float)
 
         return dat
     except:
