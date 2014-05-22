@@ -33,6 +33,10 @@ def _detailed_query(query, apikey, loc_type, disease=None, event='cases', city=N
         reader =  csv.reader(api_response.split('\n'), delimiter=',')
         headers = reader.next()
         dat = pd.DataFrame([row for row in reader], columns=headers)
+        dat['number'] = dat['number'].astype('float')
+        dat['year'] = dat['year'].astype('int')
+        dat['week'] = dat['week'].astype('int')
+
 
         return dat
     except:
